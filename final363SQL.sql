@@ -78,18 +78,36 @@ VALUES
 (1, 'The Ides of March', 2011, 7.1, 101),
 (2, 'Thor: Ragnarok', 2017, 7.9, 130),
 (3, 'What We Do in the Shadows', 2014, 7.7, 86),
-(4, 'Avengers: Endgame', 2019, 7.9, 181);
+(4, 'Avengers: Endgame', 2019, 7.9, 181),
+(5, 'Avengers: Infinity War', 2018, 8.5, 149)
+(6, 'Captain America: Civil War', 2016, 7.8, 147),
+(7, 'Spider-Man: Homecoming', 2017, 7.5, 133),
+(8, 'Fast')
+;
 
 INSERT INTO TvSeries
 VALUES
-(1, 'Community', 22, 2009, 2015, 8.5);
+(1, 'Community', 22, 2009, 2015, 8.5),
+(2, 'How I Met Your Mother', 22 , 2005, 2014, 8.3),
+(3, 'Saturday Night Live', 90, 1975, Present, 8.1),
+(4, 'Brooklyn Nine-Nine', 22, 2013, Present, 8.4),
+(5, 'Everybody Hates Chris', 22, 2005, 2009, 7.4),
+
 
 INSERT INTO People
 VALUES
 ( 1, 'George', 'Clooney', '1961-05-06', 'USA'),
 (2, 'Taika', 'Waititi', '1975-08-16', 'New Zealand'),
 (3, 'Anthony', 'Russo', '1970-02-03', 'USA'),
-(4, 'Joe', 'Russo', '1971-07-08', 'USA');
+(4, 'Joe', 'Russo', '1971-07-08', 'USA'),
+(5, 'Robert', 'Downey Jr', '1965-04-04', 'USA'),
+(6, 'Chris', 'Evans', '1981-06-13', 'USA'),
+(7, 'Chris', 'Hemsworth', '1983-08-11', 'Australia'),
+(8, 'Mark', 'Ruffalo', '1967-11-22', 'USA'),
+(9, 'Scarlett', 'Johansen', '1984-11-22', 'USA'),
+(10, 'Andy', 'Samberg', '1978-08-18', 'USA'),
+(11, 'Chris', 'Rock', '1965-02-07', 'USA')
+;
 
 INSERT INTO Role_in_film
 VALUES
@@ -104,14 +122,26 @@ VALUES
 ( 3, 2, 'Writer'),
 ( 3, 2, 'Producer'),
 ( 4, 3, 'Director'),
-( 4, 4, 'Director');
+( 4, 4, 'Director')
+( 4, 5, 'Actor'),
+( 4, 6, 'Actor'),
+( 4, 7, 'Actor'),
+( 4, 8, 'Actor'),
+( 4, 9, 'Actor'),
+
+;
 
 INSERT INTO Role_in_tv
 VALUES
 ( 1, 3, 'Producer'),
 ( 1, 3, 'Director'),
 ( 1, 4, 'Producer'),
-( 1, 4, 'Director');
+( 1, 4, 'Director'),
+( 4, 10, 'Actor'),
+( 4, 10, 'Producer'),
+( 5, 11, 'Writer'),
+( 5, 11, 'Producer')
+
 
 INSERT INTO Film_gen
 VALUES
