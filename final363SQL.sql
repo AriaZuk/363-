@@ -82,8 +82,8 @@ VALUES
 (5, 'Avengers: Infinity War', 2018, 8.5, 149)
 (6, 'Captain America: Civil War', 2016, 7.8, 147),
 (7, 'Spider-Man: Homecoming', 2017, 7.5, 133),
-(8, 'Fast')
-;
+(8, 'The Conjuring', 2013, 7.5, 112),
+(9, 'The Conjuring 2', 2016, 7.4, 134);
 
 INSERT INTO TvSeries
 VALUES
@@ -92,11 +92,15 @@ VALUES
 (3, 'Saturday Night Live', 90, 1975, Present, 8.1),
 (4, 'Brooklyn Nine-Nine', 22, 2013, Present, 8.4),
 (5, 'Everybody Hates Chris', 22, 2005, 2009, 7.4),
-
+(6, 'Breaking Bad', 49, 2008, 2013, 9.5),
+(7, 'Malcolm in the Middle', 22, 2000, 2006, 8.0),
+(8, 'Glee', 44, 2009, 2015, 6.8),
+(9, 'The Flash', 43, 2014, Present, 7.9),
+(10, 'The Arrow', 42, 2012, Present, 7.7);
 
 INSERT INTO People
 VALUES
-( 1, 'George', 'Clooney', '1961-05-06', 'USA'),
+(1, 'George', 'Clooney', '1961-05-06', 'USA'),
 (2, 'Taika', 'Waititi', '1975-08-16', 'New Zealand'),
 (3, 'Anthony', 'Russo', '1970-02-03', 'USA'),
 (4, 'Joe', 'Russo', '1971-07-08', 'USA'),
@@ -106,8 +110,12 @@ VALUES
 (8, 'Mark', 'Ruffalo', '1967-11-22', 'USA'),
 (9, 'Scarlett', 'Johansen', '1984-11-22', 'USA'),
 (10, 'Andy', 'Samberg', '1978-08-18', 'USA'),
-(11, 'Chris', 'Rock', '1965-02-07', 'USA')
-;
+(11, 'Chris', 'Rock', '1965-02-07', 'USA'),
+(12, 'Bryan','Cranston', '1956-03-07', 'USA'),
+(13, 'Frankie', 'Muniz', '1985-12-05', 'USA'),
+(14, 'Melissa', 'Benoist', '1988-10-04', 'USA'),
+(15, 'Grant', 'Gustin', '1990-01-14', 'USA'),
+(16, 'James Wan', '1977-02-26', 'Malaysia');
 
 INSERT INTO Role_in_film
 VALUES
@@ -128,7 +136,18 @@ VALUES
 ( 4, 7, 'Actor'),
 ( 4, 8, 'Actor'),
 ( 4, 9, 'Actor'),
-
+( 5, 5, 'Actor'),
+( 5, 6, 'Actor'),
+( 5, 7, 'Actor'),
+( 5, 8, 'Actor'),
+( 5, 9, 'Actor'),
+( 6, 5, 'Actor'),
+( 6, 6, 'Actor'),
+( 6, 7, 'Actor'),
+( 6, 8, 'Actor'),
+( 6, 9, 'Actor'),
+( 8, 16, 'Director'),
+( 9, 16, 'Director'),
 ;
 
 INSERT INTO Role_in_tv
@@ -140,8 +159,12 @@ VALUES
 ( 4, 10, 'Actor'),
 ( 4, 10, 'Producer'),
 ( 5, 11, 'Writer'),
-( 5, 11, 'Producer')
-
+( 5, 11, 'Producer'),
+( 6, 12, 'Actor'),
+( 7, 12, 'Actor'),
+( 8, 14, 'Actor'),
+( 8, 15, 'Actor'),
+( 9, 15, 'Actor');
 
 INSERT INTO Film_gen
 VALUES
@@ -151,11 +174,47 @@ VALUES
 (2, 'Adventure'),
 (2, 'Comedy'),
 (3, 'Comedy'),
-(3, 'Horror');
+(3, 'Horror'),
+(4, 'Action'),
+(4, 'Adventure'),
+(4,'Fantasy'),
+(5, 'Action'),
+(5, 'Adventure'),
+(5, 'Sci-Fi'),
+(6, 'Action'),
+(6, 'Adventure'),
+(6, 'Sci-FI'),
+(7, 'Action'),
+(7, 'Adventure'),
+(7, 'Sci-FI'),
+(8, 'Horror'),
+(8, ' Mystery'),
+(8, 'Thriller');
 
 INSERT INTO Tv_gen
 VALUES
-(1, 'Comedy');
+(1, 'Comedy'),
+(2,'Comedy'),
+(2,'Romance'),
+(3, 'Comedy'),
+(3, 'Music'),
+(4, 'Comedy'),
+(4, 'Crime'),
+(5, 'Comedy'),
+(6, 'Crime'),
+(6, 'Drama'),
+(6, 'Thriller'),
+(7, 'Comedy'),
+(7, 'Family'),
+(8, 'Comedy'),
+(8, 'Drama'),
+(8, 'Music'),
+(9, 'Action'),
+(9, 'Adventure'),
+(9, 'Drama'),
+(10, 'Action'),
+(10, 'Adventure'),
+(10, 'Crime');
 
 INSERT INTO Season
 VALUES
@@ -164,7 +223,9 @@ VALUES
 (3, 3, 22),
 (4, 4, 13),
 (5, 5, 13),
-(6, 6, 13);
+(6, 6, 13),
+(7,7, 21),
+;
 
 INSERT INTO HasSeason
 VALUES
@@ -182,7 +243,8 @@ VALUES
 (3, 3, 'Intorduction to Film', '2009-10-01'),
 (4, 4, 'Social Psychology', '2009-10-08'),
 (5, 5, 'Advanced Criminal Law', '2009-10-15'),
-(6, 6, 'Football, Feminism and You', '2009-10-22');
+(6, 6, 'Football, Feminism and You', '2009-10-22'),
+();
 
 INSERT INTO HasEpisode
 VALUES
