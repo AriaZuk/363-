@@ -1,76 +1,79 @@
 CREATE TABLE Film(
     film_id INT,
     title VARCHAR(255) NOT NULL,
-    release_year INT,
-    rating FLOAT,
-    run_time_min INT,
+    release_year INT NOT NULL,
+    rating FLOAT NOT NULL,
+    run_time_min INT NOT NULL,
     PRIMARY KEY (film_id)
-);
-CREATE TABLE Genre(
-    genre VARCHAR(255),
-    PRIMARY KEY (genre)
 );
 CREATE TABLE TvSeries(
     tv_id INT,
     title VARCHAR(255) NOT NULL,
-    runtime_avg INT,
-    start_year INT,
-    end_year INT,
-    rating FLOAT,
+    runtime_avg INT NOT NULL,
+    start_year INT NOT NULL,
+    end_year VARCHAR(255) NOT NULL,
+    rating FLOAT NOT NULL,
     PRIMARY KEY (tv_id)
 );
 CREATE TABLE Season(
-    season_id INT,
-    season_num INT,
-    num_of_episodes INT,
-    PRIMARY KEY (season_id)
+    tv_id INT,
+    season_num INT NOT NULL,
+    num_of_episodes INT NOT NULL,
+    PRIMARY KEY (tv_id, season_num),
+    FOREIGN KEY (tv_id) REFERENCES TvSeries
+    ON DELETE CASCADE
 );
 CREATE TABLE Episode(
-    ep_id INT,
-    ep_num INT,
+    tv_id INT,
+    season_num INT NOT NULL,
+    ep_num INT NOT NULL,
     title VARCHAR(255),
     release_date DATE,
-    PRIMARY KEY (ep_id)
+    PRIMARY KEY (tv_id, season_num, ep_num),
+    FOREIGN KEY (tv_id, season_num) REFERENCES Season
+    ON DELETE CASCADE
 );
 CREATE TABLE People(
-    people_id INT,
-    first_name VARCHAR(255),
-    last_name VARCHAR(255),
-    dob DATE,
-    country_of_birth VARCHAR(255),
+    people_id INT NOT NULL,
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255) NOT NULL,
+    dob DATE NOT NULL,
+    country_of_birth VARCHAR(255) NOT NULL,
     PRIMARY KEY (people_id)
 );
 CREATE TABLE Role_in_film(
     film_id INT,
-    people_id INT,
-    roleIn VARCHAR(255),
-    PRIMARY KEY (film_id, people_id, roleIn)
+    people_id INT NOT NULL,
+    roleIn VARCHAR(255) NOT NULL,
+    PRIMARY KEY (film_id, people_id, roleIn),
+    FOREIGN KEY (film_id) REFERENCES Film
+    ON DELETE CASCADE,
+    FOREIGN KEY (people_id) REFERENCES People
+    ON DELETE CASCADE
 );
 CREATE TABLE Role_in_tv(
     tv_id INT,
-    people_id INT,
-    roleIn VARCHAR(255),
-    PRIMARY KEY (tv_id, people_id, roleIn)
+    people_id INT NOT NULL,
+    roleIn VARCHAR(255) NOT NULL,
+    PRIMARY KEY (tv_id, people_id, roleIn),
+    FOREIGN KEY (tv_id) REFERENCES TvSeries
+    ON DELETE CASCADE,
+    FOREIGN KEY (people_id) REFERENCES People
+    ON DELETE CASCADE
 );
 CREATE TABLE Film_gen(
     film_id INT,
-    genre VARCHAR(255),
-    PRIMARY KEY (film_id, genre)
+    genre VARCHAR(255) NOT NULL,
+    PRIMARY KEY (film_id, genre),
+    FOREIGN KEY (film_id) REFERENCES Film
+    ON DELETE CASCADE
 );
 CREATE TABLE Tv_gen(
     tv_id INT,
-    genre VARCHAR(255),
-    PRIMARY KEY (tv_id, genre)
-);
-CREATE TABLE HasSeason(
-    tv_id INT,
-    season_id INT,
-    PRIMARY KEY (tv_id, season_id)
-);
-CREATE TABLE HasEpisode (
-    season_id INT,
-    ep_id INT,
-    PRIMARY KEY (season_id, ep_id)
+    genre VARCHAR(255) NOT NULL,
+    PRIMARY KEY (tv_id, genre),
+    FOREIGN KEY (tv_id) REFERENCES TvSeries
+    ON DELETE CASCADE
 );
 
 INSERT INTO Film
@@ -79,7 +82,7 @@ VALUES
 (2, 'Thor: Ragnarok', 2017, 7.9, 130),
 (3, 'What We Do in the Shadows', 2014, 7.7, 86),
 (4, 'Avengers: Endgame', 2019, 7.9, 181),
-(5, 'Avengers: Infinity War', 2018, 8.5, 149)
+(5, 'Avengers: Infinity War', 2018, 8.5, 149),
 (6, 'Captain America: Civil War', 2016, 7.8, 147),
 (7, 'Spider-Man: Homecoming', 2017, 7.5, 133),
 (8, 'The Conjuring', 2013, 7.5, 112),
@@ -96,7 +99,41 @@ VALUES
 (7, 'Malcolm in the Middle', 22, 2000, 2006, 8.0),
 (8, 'Glee', 44, 2009, 2015, 6.8),
 (9, 'The Flash', 43, 2014, Present, 7.9),
-(10, 'The Arrow', 42, 2012, Present, 7.7);
+(10, 'The Arrow', 42, 2012, Present, 7.7)
+;
+
+INSERT INTO Season
+VALUES
+(1, 1, 25),
+(1, 2, 24),
+(1, 3, 22),
+(1, 4, 13),
+(1, 5, 13),
+(1, 6, 13),
+(4, 1, 22),
+(4, 2, 23),
+(4, 3, 23),
+(4, 4, 22),
+(4, 5, 22),
+(4, 6, 18)
+;
+
+INSERT INTO Episode
+VALUES
+(1, 1, 1, 'Pilot', '2009-09-17'),
+(1, 1, 2, 'Spanish 101', '2009-09-24'),
+(1, 1, 3, 'Intorduction to Film', '2009-10-01'),
+(1, 1, 4, 'Social Psychology', '2009-10-08'),
+(1, 1, 5, 'Advanced Criminal Law', '2009-10-15'),
+(1, 1, 6, 'Football, Feminism and You', '2009-10-22'),
+(4, 1, 1, 'Pilot', '2013-09-17' ),
+(4, 1, 2, 'The Tagger', '2013-09-18'),
+(4, 1, 3, 'The Slump', '2013-10-01'),
+(4, 1, 4, 'M.E. Time', '2013-10-08'),
+(4, 1, 5, 'The Vulture', '2013-10-15'),
+(4, 1, 6, 'Halloween', '2013-10-22'),
+(4, 1, 7, '48 Hours', '2013-11-05')
+;
 
 INSERT INTO People
 VALUES
@@ -115,8 +152,10 @@ VALUES
 (13, 'Frankie', 'Muniz', '1985-12-05', 'USA'),
 (14, 'Melissa', 'Benoist', '1988-10-04', 'USA'),
 (15, 'Grant', 'Gustin', '1990-01-14', 'USA'),
-(16, 'James', 'Wan', '1977-02-26', 'Malaysia')
-(17, 'Vin', 'Diesel', '1967-07-18', 'USA');
+(16, 'James', 'Wan', '1977-02-26', 'Malaysia'),
+(17, 'Vin', 'Diesel', '1967-07-18', 'USA'),
+(18, 'Chris', 'Pratt', '1979-06-21', 'USA')
+;
 
 INSERT INTO Role_in_film
 VALUES
@@ -131,7 +170,7 @@ VALUES
 ( 3, 2, 'Writer'),
 ( 3, 2, 'Producer'),
 ( 4, 3, 'Director'),
-( 4, 4, 'Director')
+( 4, 4, 'Director'),
 ( 4, 5, 'Actor'),
 ( 4, 6, 'Actor'),
 ( 4, 7, 'Actor'),
@@ -219,81 +258,4 @@ VALUES
 (10, 'Adventure'),
 (10, 'Crime');
 
-INSERT INTO Season
-VALUES
-(1, 1, 25),
-(2, 2, 24),
-(3, 3, 22),
-(4, 4, 13),
-(5, 5, 13),
-(6, 6, 13),
-(7, 7, 20),
-(8, 8, 21);
-
-INSERT INTO HasSeason
-VALUES
-(1, 1),
-(1, 2),
-(1, 3),
-(1, 4),
-(1, 5),
-(1, 6),
-(2, 1),
-(2, 2),
-(2, 3),
-(2, 4),
-(2, 5),
-(2, 6),
-(2, 7),
-(2, 8),
-(2, 9),
-(3, 1),
-(3, 2),
-(3, 3),
-(4, 1),
-(4, 2),
-(4, 3),
-(4, 4),
-(4, 5),
-(5, 1), 
-(5, 2),
-(5, 3),
-(5, 4),
-(5, 5),
-(5, 6);
-
-INSERT INTO Episode
-VALUES
-(1, 1, 'Pilot', '2009-09-17'),
-(2, 2, 'Spanish 101', '2009-09-24'),
-(3, 3, 'Intorduction to Film', '2009-10-01'),
-(4, 4, 'Social Psychology', '2009-10-08'),
-(5, 5, 'Advanced Criminal Law', '2009-10-15'),
-(6, 6, 'Football, Feminism and You', '2009-10-22'),
-(1, 1, 'Pilot', '2010-07-15' ),
-(3, 4, 'Episode 4', '2010-06-18'),
-(3, 5, 'Halloween', '2013-10-22'),
-(5, 5, 'The Vulture', '2013-11-05'),
-(6, 6, 'Episode 5', '2014-09-15'),
-(8, 7, 'Third Wheel', '2007-10-08'),
-(8, 8, 'How I Met Everyone Else', '2007-10-22');
-
-INSERT INTO HasEpisode
-VALUES
-(1, 1),
-(1, 2),
-(1, 3),
-(1, 4),
-(1, 5),
-(1, 6),
-(2, 1),
-(2, 2),
-(2, 3),
-(3, 1),
-(3, 2),
-(3, 3),
-(4, 7),
-(4, 8),
-(5, 2);
-
-select first_name, last_name, title from people natural join Role_in_film natural join film where roleIn = 'Actor';
+--select first_name, last_name, title from people natural join Role_in_film natural join film where roleIn = 'Actor';
