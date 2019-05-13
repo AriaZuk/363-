@@ -224,8 +224,8 @@ VALUES
 (4, 4, 13),
 (5, 5, 13),
 (6, 6, 13),
-(7,7, 21),
-;
+(7, 7, 20),
+(8, 8, 21);
 
 INSERT INTO HasSeason
 VALUES
@@ -234,7 +234,20 @@ VALUES
 (1, 3),
 (1, 4),
 (1, 5),
-(1, 6);
+(1, 6),
+(2, 1),
+(2, 2),
+(2, 3),
+(2, 4),
+(2, 5),
+(2, 6),
+(2, 7),
+(2, 8),
+(2, 9),
+(3, 1),
+(3, 2),
+(3, 3),
+(4, 1,)
 
 INSERT INTO Episode
 VALUES
@@ -244,7 +257,8 @@ VALUES
 (4, 4, 'Social Psychology', '2009-10-08'),
 (5, 5, 'Advanced Criminal Law', '2009-10-15'),
 (6, 6, 'Football, Feminism and You', '2009-10-22'),
-();
+(1, 1, 'Pilot', '2010-07-15' ),
+(3, 4, 'Episode 4', '2010-06-18');
 
 INSERT INTO HasEpisode
 VALUES
@@ -253,6 +267,12 @@ VALUES
 (1, 3),
 (1, 4),
 (1, 5),
-(1, 6);
+(1, 6),
+(2, 1),
+(2, 2),
+(2, 3),
+(3, 1),
+(3, 2),
+(3, 3);
 
 select first_name, last_name, title from people natural join Role_in_film natural join film where roleIn = 'Actor';
