@@ -92,14 +92,14 @@ INSERT INTO TvSeries
 VALUES
 (1, 'Community', 22, 2009, 2015, 8.5),
 (2, 'How I Met Your Mother', 22 , 2005, 2014, 8.3),
-(3, 'Saturday Night Live', 90, 1975, Present, 8.1),
-(4, 'Brooklyn Nine-Nine', 22, 2013, Present, 8.4),
+(3, 'Saturday Night Live', 90, 1975, 'Present', 8.1),
+(4, 'Brooklyn Nine-Nine', 22, 2013, 'Present', 8.4),
 (5, 'Everybody Hates Chris', 22, 2005, 2009, 7.4),
 (6, 'Breaking Bad', 49, 2008, 2013, 9.5),
 (7, 'Malcolm in the Middle', 22, 2000, 2006, 8.0),
 (8, 'Glee', 44, 2009, 2015, 6.8),
-(9, 'The Flash', 43, 2014, Present, 7.9),
-(10, 'The Arrow', 42, 2012, Present, 7.7)
+(9, 'The Flash', 43, 2014, 'Present', 7.9),
+(10, 'The Arrow', 42, 2012, 'Present', 7.7)
 ;
 
 INSERT INTO Season
@@ -258,4 +258,4 @@ VALUES
 (10, 'Adventure'),
 (10, 'Crime');
 
---select first_name, last_name, title from people natural join Role_in_film natural join film where roleIn = 'Actor';
+--select first_name, last_name, title from people natural join Role_in_film natural join film where roleIn = 'Actor' order by title;
