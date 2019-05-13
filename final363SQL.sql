@@ -115,7 +115,8 @@ VALUES
 (13, 'Frankie', 'Muniz', '1985-12-05', 'USA'),
 (14, 'Melissa', 'Benoist', '1988-10-04', 'USA'),
 (15, 'Grant', 'Gustin', '1990-01-14', 'USA'),
-(16, 'James Wan', '1977-02-26', 'Malaysia');
+(16, 'James', 'Wan', '1977-02-26', 'Malaysia')
+(17, 'Vin', 'Diesel', '1967-07-18', 'USA');
 
 INSERT INTO Role_in_film
 VALUES
@@ -148,6 +149,8 @@ VALUES
 ( 6, 9, 'Actor'),
 ( 8, 16, 'Director'),
 ( 9, 16, 'Director'),
+( 4, 17, 'Actor'),
+( 5, 17, 'Actor')
 ;
 
 INSERT INTO Role_in_tv
@@ -247,7 +250,17 @@ VALUES
 (3, 1),
 (3, 2),
 (3, 3),
-(4, 1,)
+(4, 1),
+(4, 2),
+(4, 3),
+(4, 4),
+(4, 5),
+(5, 1), 
+(5, 2),
+(5, 3),
+(5, 4),
+(5, 5),
+(5, 6);
 
 INSERT INTO Episode
 VALUES
@@ -258,7 +271,12 @@ VALUES
 (5, 5, 'Advanced Criminal Law', '2009-10-15'),
 (6, 6, 'Football, Feminism and You', '2009-10-22'),
 (1, 1, 'Pilot', '2010-07-15' ),
-(3, 4, 'Episode 4', '2010-06-18');
+(3, 4, 'Episode 4', '2010-06-18'),
+(3, 5, 'Halloween', '2013-10-22'),
+(5, 5, 'The Vulture', '2013-11-05'),
+(6, 6, 'Episode 5', '2014-09-15'),
+(8, 7, 'Third Wheel', '2007-10-08'),
+(8, 8, 'How I Met Everyone Else', '2007-10-22');
 
 INSERT INTO HasEpisode
 VALUES
@@ -273,6 +291,9 @@ VALUES
 (2, 3),
 (3, 1),
 (3, 2),
-(3, 3);
+(3, 3),
+(4, 7),
+(4, 8),
+(5, 2);
 
 select first_name, last_name, title from people natural join Role_in_film natural join film where roleIn = 'Actor';
