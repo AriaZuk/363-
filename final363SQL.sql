@@ -99,7 +99,8 @@ VALUES
 (7, 'Malcolm in the Middle', 22, 2000, 2006, 8.0),
 (8, 'Glee', 44, 2009, 2015, 6.8),
 (9, 'The Flash', 43, 2014, 'Present', 7.9),
-(10, 'The Arrow', 42, 2012, 'Present', 7.7)
+(10, 'The Arrow', 42, 2012, 'Present', 7.7),
+(11, 'Parks and Recreation', 22, 2009, 2015, 8.6)
 ;
 
 INSERT INTO Season
@@ -154,7 +155,8 @@ VALUES
 (15, 'Grant', 'Gustin', '1990-01-14', 'USA'),
 (16, 'James', 'Wan', '1977-02-26', 'Malaysia'),
 (17, 'Vin', 'Diesel', '1967-07-18', 'USA'),
-(18, 'Chris', 'Pratt', '1979-06-21', 'USA')
+(18, 'Chris', 'Pratt', '1979-06-21', 'USA'),
+(19, 'Amy', 'Poehler', '1971-09-16', 'USA')
 ;
 
 INSERT INTO Role_in_film
@@ -189,7 +191,9 @@ VALUES
 ( 8, 16, 'Director'),
 ( 9, 16, 'Director'),
 ( 4, 17, 'Actor'),
-( 5, 17, 'Actor')
+( 5, 17, 'Actor'),
+( 4, 18, 'Actor'),
+( 5, 18, 'Actor')
 ;
 
 INSERT INTO Role_in_tv
@@ -206,7 +210,13 @@ VALUES
 ( 7, 12, 'Actor'),
 ( 8, 14, 'Actor'),
 ( 8, 15, 'Actor'),
-( 9, 15, 'Actor');
+( 9, 15, 'Actor'),
+( 11, 19, 'Director'),
+( 11, 19, 'Actor'),
+( 11, 19, 'Producer'),
+( 11, 19, 'Writer'),
+( 11, 18, 'Actor')
+;
 
 INSERT INTO Film_gen
 VALUES
@@ -259,3 +269,15 @@ VALUES
 (10, 'Crime');
 
 --select first_name, last_name, title from people natural join Role_in_film natural join film where roleIn = 'Actor' order by title;
+
+--Show films from a ‘year’ that are both ‘genre’ and ‘genre’,
+--display title, director, year and genres 
+select title, first_name, last_name, release_year from film_gen natural join film natural join Role_in_film natural join people where roleIn = 'Director'  and genre = 'Comedy' and genre = 'Action' order by title;
+--Get all tv series that came out after ‘year’ with ‘number’ of seasons
+--How many times a director directed a comedy
+--Show tv series that an episode is less than 25 min on average and more than 2 seasons and a comedy 
+--People who have more than 3 roles in a movie/tv series
+--All people who had all the roles in a movie 
+--Tv series that has more than x seasons each with more than x episodes 
+--Actors over/under certain age
+--People with roles both in TV and film 
