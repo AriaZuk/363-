@@ -76,6 +76,8 @@ CREATE TABLE Tv_gen(
     ON DELETE CASCADE
 );
 
+-- INSERTS
+
 INSERT INTO Film
 VALUES
 (1, 'The Ides of March', 2011, 7.1, 101),
@@ -118,7 +120,16 @@ VALUES
 (4, 3, 23),
 (4, 4, 22),
 (4, 5, 22),
-(4, 6, 18)
+(4, 6, 18),
+(2, 1, 22),
+(2, 2, 22),
+(2, 3, 20),
+(2, 4, 24),
+(2, 5, 24),
+(2, 6, 24),
+(2, 7, 24),
+(2, 8, 24),
+(2, 9, 24)
 ;
 
 INSERT INTO Episode
@@ -272,6 +283,8 @@ VALUES
 (10, 'Adventure'),
 (10, 'Crime');
 
+-- VIEWS
+
 --Roles in Film
 Create view factors as
 Select * from people natural join role_in_film where roleIn = 'Actor' order by last_name;
@@ -303,6 +316,8 @@ Select * from TvSeries natural join tv_gen where genre = "Action";
 Create view tvadventure as
 Select * from TvSeries natural join tv_gen where genre = "Adventure";
 
+-- QUERIES
+
 --Show title, release year and genres for films that are both action and adventure.
 select faction.title, faction.release_year, faction.genre, fadventure.genre from faction join fadventure on faction.film_id = fadventure.film_id;
 --Show title, release year directors and genres for films that are both action and adventure. Includes nulls if director is not yet in the database.
@@ -321,16 +336,27 @@ select * from Role_in_film join  Role_in_tv on  Role_in_tv.people_id =  Role_in_
 ));
 
 --People born after 1980, display name, date of birth, country of birth order alphabetically by surname
-select last_name, first_name, dob, country_of_birth from people where  cast(substr(dob, 1, 4) as int) >= 1980 order by last_name;
+select last_name, first_name, dob, country_of_birth from people where cast(substr(dob, 1, 4) as int) >= 1980 order by last_name;
 
---select title, first_name, last_name, release_year from film_gen natural join film natural join Role_in_film natural join people where roleIn = 'Director'  and genre = 'Comedy' and genre = 'Action' order by title;
---Get all tv series that came out after ‘year’ with ‘number’ of seasons
---How many times a director directed a comedy
---Show tv series that an episode is less than 25 min on average and more than 2 seasons and a comedy 
+--People not born in USA
+select first_name, last_name, country_of_birth from people where country_of_birth != "USA" order by last_name;
 
---People who have more than 3 roles in a movie/tv series
---Select first_name, last_name
---All people who had all the roles in a movie 
---Tv series that has more than x seasons each with more than x episodes 
---Actors over/under certain age
+-- People who directed, produced, wrote and acted in a movie or TV series. Quadruple threats.
+-- Display name, titles and year; order by year released descending then title alphabetically.
+select fn, ln, title, year from (
+select people_idF, fn, ln, fi , title, release_year as year from (
+select fwriters.people_id as people_idW, fwriters.first_name as fn, fwriters.last_name as ln, fwriters.film_id as fi from fwriters join fproducers on fwriters.people_id = fproducers.people_id ) join
+(select factors.people_id as people_idF, factors.first_name, factors.last_name, factors.film_id  from factors join fdirectors on factors.people_id = fdirectors.people_id)
+on people_idF = people_idW natural join film
+union
+select people_idT, fn, ln, ti, title , start_year as year from (
+select tvwriters.people_id as people_idW, tvwriters.first_name as fn, tvwriters.last_name as ln, tvwriters.tv_id as ti from tvwriters join tvproducers on tvwriters.people_id = tvproducers.people_id) join
+(select tvactors.people_id as people_idT, tvactors.first_name, tvactors.last_name, tvactors.tv_id  from tvactors join tvdirectors on tvactors.people_id = tvdirectors.people_id)
+on people_idT = people_idW natural join TvSeries
+) order by year desc, title;
 
+-- Count how many films the person acted in.
+select first_name, last_name, count(roleIn) from role_in_film natural join people where roleIn = "Actor" group by people_id order by count(roleIn) desc, last_name ;
+
+-- For Tv Series show how many season and average number of episodes per season  order by title
+select title, count(*), cast(avg(num_of_episodes) as int) from Season natural join TVseries group by tv_id order by title;
