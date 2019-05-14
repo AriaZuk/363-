@@ -86,7 +86,9 @@ VALUES
 (6, 'Captain America: Civil War', 2016, 7.8, 147),
 (7, 'Spider-Man: Homecoming', 2017, 7.5, 133),
 (8, 'The Conjuring', 2013, 7.5, 112),
-(9, 'The Conjuring 2', 2016, 7.4, 134);
+(9, 'The Conjuring 2', 2016, 7.4, 134),
+(10, 'Wine Country', 2019, 5.5, 103)
+;
 
 INSERT INTO TvSeries
 VALUES
@@ -193,7 +195,9 @@ VALUES
 ( 4, 17, 'Actor'),
 ( 5, 17, 'Actor'),
 ( 4, 18, 'Actor'),
-( 5, 18, 'Actor')
+( 5, 18, 'Actor'),
+( 10, 19, 'Director'),
+( 10, 19, 'Actor')
 ;
 
 INSERT INTO Role_in_tv
@@ -268,16 +272,65 @@ VALUES
 (10, 'Adventure'),
 (10, 'Crime');
 
---select first_name, last_name, title from people natural join Role_in_film natural join film where roleIn = 'Actor' order by title;
+--Roles in Film
+Create view factors as
+Select * from people natural join role_in_film where roleIn = 'Actor' order by last_name;
+Create view fdirectors as
+Select * from people natural join role_in_film where roleIn = 'Director' order by last_name;
+Create view fwriters as
+Select * from people natural join role_in_film where roleIn = 'Writer' order by last_name;
+Create view fproducers as
+Select * from people natural join role_in_film where roleIn = 'Producer' order by last_name;
 
---Show films from a ‘year’ that are both ‘genre’ and ‘genre’,
---display title, director, year and genres 
-select title, first_name, last_name, release_year from film_gen natural join film natural join Role_in_film natural join people where roleIn = 'Director'  and genre = 'Comedy' and genre = 'Action' order by title;
+--Roles in TV
+Create view tvactors as
+Select * from people natural join role_in_tv where roleIn = 'Actor' order by last_name;
+Create view tvdirectors as
+Select * from people natural join role_in_tv where roleIn = 'Director' order by last_name;
+Create view tvwriters as
+Select * from people natural join role_in_tv where roleIn = 'Writer' order by last_name;
+Create view tvproducers as
+Select * from people natural join role_in_tv where roleIn = 'Producer' order by last_name;
+
+--Example Film genres
+Create view faction as
+Select * from film natural join film_gen where genre = "Action";
+Create view fadventure as
+Select * from film natural join film_gen where genre = "Adventure";
+--Example TV genres
+Create view tvaction as
+Select * from TvSeries natural join tv_gen where genre = "Action";
+Create view tvadventure as
+Select * from TvSeries natural join tv_gen where genre = "Adventure";
+
+--Show title, release year and genres for films that are both action and adventure.
+select faction.title, faction.release_year, faction.genre, fadventure.genre from faction join fadventure on faction.film_id = fadventure.film_id;
+--Show title, release year directors and genres for films that are both action and adventure. Includes nulls if director is not yet in the database.
+select title, first_name, last_name, year, genre1, genre2 from  (
+select faction.film_id as film_idj, faction.title as title, faction.release_year as year, faction.genre as genre1, fadventure.genre as genre2 from faction join fadventure on faction.film_id = fadventure.film_id
+) left join fdirectors on  film_idj = fdirectors.film_id order by title;
+--Show titles and genres for films AND TV series that are both action and adventure.
+select tvaction.title, tvaction.start_year, tvaction.genre, tvadventure.genre from tvaction join tvadventure on tvaction.tv_id = tvadventure.tv_id
+union 
+select faction.title, faction.release_year, faction.genre, fadventure.genre from faction join fadventure on faction.film_id = fadventure.film_id;
+
+--People with roles both in TV and film 
+select distinct first_name, last_name from (
+select * from people natural join (
+select * from Role_in_film join  Role_in_tv on  Role_in_tv.people_id =  Role_in_film.people_id
+));
+
+--People born after 1980, display name, date of birth, country of birth order alphabetically by surname
+select last_name, first_name, dob, country_of_birth from people where  cast(substr(dob, 1, 4) as int) >= 1980 order by last_name;
+
+--select title, first_name, last_name, release_year from film_gen natural join film natural join Role_in_film natural join people where roleIn = 'Director'  and genre = 'Comedy' and genre = 'Action' order by title;
 --Get all tv series that came out after ‘year’ with ‘number’ of seasons
 --How many times a director directed a comedy
 --Show tv series that an episode is less than 25 min on average and more than 2 seasons and a comedy 
+
 --People who have more than 3 roles in a movie/tv series
+--Select first_name, last_name
 --All people who had all the roles in a movie 
 --Tv series that has more than x seasons each with more than x episodes 
 --Actors over/under certain age
---People with roles both in TV and film 
+
